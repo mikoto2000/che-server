@@ -137,7 +137,7 @@ build_image() {
     -e "s;\${BUILD_PREFIX};${PREFIX};" \
     -e "s;\${BUILD_TAG};${TAG};" \
     > ${DIR}/.Dockerfile
-  cd "${DIR}" && docker build -f ${DIR}/.Dockerfile -t ${IMAGE_NAME} ${BUILD_ARGS} .
+  cd "${DIR}" && docker buildx build --platform linux/amd64,linux/arm64 -f ${DIR}/.Dockerfile -t ${IMAGE_NAME} ${BUILD_ARGS} .
   DOCKER_BUILD_STATUS=$?
   rm ${DIR}/.Dockerfile
   if [ $DOCKER_BUILD_STATUS -eq 0 ]; then
